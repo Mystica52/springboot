@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/students")
+@RequestMapping("/api/v1")
 public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
 
-    @GetMapping
+    @GetMapping("/students")
     public List<Student>getAllStudent(){
         return studentRepository.findAll();
     }
     //create student rest api
     @PostMapping
-    public Student createstudent(@RequestBody Student student){
+    public Student createStudent(@RequestBody Student student){
         return studentRepository.save(student);
 
     }
