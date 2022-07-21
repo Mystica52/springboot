@@ -41,4 +41,10 @@ testing of spring boot is somehow challenged
 Lot of class files sometimes you forgot what some of them did
 
 
+
+# system of registration of student and with  authentication and send random OTP to the email 
+# am still working on saving otp in the database
+# otp services is useless 
+
+
 So spring boot is good to use for the one who is familiar with it and it is easy. I will become more familiar as time goes. To this spring boot needed often to use it in order to master it. I still continue to learn some terms used in it.
