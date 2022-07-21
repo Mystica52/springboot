@@ -49,9 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/generateOtp")
-                .permitAll()
 
-                //.defaultSuccessUrl("/list")
+
+                .defaultSuccessUrl("/list")
                 .permitAll()
                 .and()
                 .logout()
