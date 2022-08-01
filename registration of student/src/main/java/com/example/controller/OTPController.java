@@ -56,14 +56,16 @@ public class OTPController {
 
     @RequestMapping(value ="/validateOtp", method = RequestMethod.POST)
     public @ResponseBody String validateOtp(@ModelAttribute("otp") @Valid EmailTemplate  otp, BindingResult result){
+        otpService.save(otp);
+
 
         final String SUCCESS = "Entered Otp is valid";
         final String FAIL = "Entered Otp is NOT valid. Please Retry!";
-        otpService.save(otp);
 
-        int existing = otpService.findByOptnum(otp.getOTP());
 
-        if (existing == EmailTemplate.getOTP()) {
+        Otp existing = otpService.findByOptnum(otp.getOTP());
+
+        if (existing != null) {
             result.rejectValue("otpnum", null, "There is already an account registered with that email");
         }
 

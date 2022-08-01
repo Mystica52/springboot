@@ -1,6 +1,7 @@
 package com.example.config;
 
 import com.example.dto.CustomAccessDeniedHandler;
+import com.example.service.OTPService;
 import com.example.service.UserService;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Arrays;
 
 
 @Configuration
@@ -33,25 +35,32 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private OTPService otpService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
+
                 .antMatchers(
                         "/registration**",
                         "/js/**",
                         "/css/**",
                         "/img/**",
                         "/webjars/**").permitAll()
+                .antMatchers("/list").hasAuthority( "ADMIN")
+                .antMatchers("/users").hasAuthority("USER")
+//                .antMatchers("/edit/**").hasRole("ADMIN")
+//                .antMatchers("/delete/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/generateOtp")
-                .permitAll()
+//                .defaultSuccessUrl("/generateOtp")
+//                .permitAll()
 
-                //.defaultSuccessUrl("/list")
                 .permitAll()
                 .and()
                 .logout()
@@ -61,7 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler());;;
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
 
     @Bean

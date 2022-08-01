@@ -2,6 +2,7 @@ package com.example.dto;
 
 import com.example.model.User;
 import com.example.repository.UserRepository;
+import com.example.service.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -18,6 +19,8 @@ import javax.mail.internet.MimeMessage;
 public class EmailUtil {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private static OTPService otpService;
 
     /**
      * Utility method to send simple HTML email
@@ -61,6 +64,7 @@ public class EmailUtil {
             Transport.send(msg);
 
             System.out.println("EMail Sent Successfully!!");
+
 
         }
         catch (Exception e) {

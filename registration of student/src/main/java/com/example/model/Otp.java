@@ -1,46 +1,40 @@
 package com.example.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "otp")
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Otp {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
+    private Integer OTP_ID;
+
     private Integer id;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-
 
     @Column(name="otpnum")
     private Integer otpnum;
-
     @Column(name="otp_Requested_Time")
     private Date otpRequestedTime;
-    public int getOtpnum() {
-        return this.otpnum;
-    }
 
-    public void setOtpnum(int i) {
-        this.otpnum = i ;
-    }
+    @OneToMany(fetch = FetchType.LAZY)
+     @JoinColumn ( name = "id", referencedColumnName = "id")
+    private Collection<User> user;
 
-    public Date getOtpRequestedTime() {
-        return otpRequestedTime;
-    }
 
-    public void setOtpRequestedTime(Date otpRequestedTime) {
-        this.otpRequestedTime = otpRequestedTime;
-    }
 
 
 }

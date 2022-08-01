@@ -102,6 +102,7 @@ public class EmailTemplate {
         String message = " Your Otp Number is " + getOTP();
 
         EmailUtil.sendEmail(session, toEmail, "TLSEmail Testing Subject", message);
+//        otpService.save(getOTP());
     }
 //        StringBuilder contentBuilder = new StringBuilder();
 //        try {
@@ -159,7 +160,7 @@ public class EmailTemplate {
         }
 
     public boolean isOTPRequired() {
-        if(this.getOTP() == 0) {
+        if(getOTP() == 0) {
             return false;
         }
         long currentTimeInMillis = System.currentTimeMillis();
@@ -174,7 +175,7 @@ public class EmailTemplate {
     private Integer optnum;
 
     @NotEmpty
-    private Date otpRequestedTime;
+    private static Date otpRequestedTime;
 
 
 
@@ -186,7 +187,7 @@ public class EmailTemplate {
         this.optnum =optnum;
     }
 
-    public Date getOtpRequestedTime() {
+    public static Date getOtpRequestedTime() {
         return otpRequestedTime;
     }
 

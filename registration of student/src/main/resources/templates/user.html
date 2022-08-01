@@ -9,18 +9,10 @@
 <body>
 <div>
     <h2 >Spring Boot Crud System -Student Registration</h2>
-    <tr>
-        <div align = "left" >
-            <h3><a  th:href="@{'/new'}">Add new</a></h3>
-        </div>
-        <div align = "left" >
-            <h4><a  th:href="@{'/registration'}">register other user</a></h4>
-        </div>
 
-    </tr>
     <tr>
 
-        <div sec:authorize="hasAuthority('ADMIN')" class="col-sm-5" align = "center" >
+        <div class="col-sm-5" align = "center" sec:authorize="hasAuthority('USER')">
             <div class="panel-body" align = "center" >
                 <table class="table">
                     <thead class="thead-dark">
@@ -28,8 +20,7 @@
                         <th>Student ID</th>
                         <th>Student Name</th>
                         <th>Course</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -38,12 +29,7 @@
                         <td th:text="${student.studentname}">StudentName</td>
                         <td th:text="${student.course}">Course</td>
 
-                        <td>
-                            <a th:href="@{'/edit/' + ${student.id}}">Edit</a>
-                        </td>
-                        <td>
-                            <a th:href="@{'/delete/' + ${student.id}}">Delete</a>
-                        </td>
+
                     </tr>
 
 
@@ -61,4 +47,3 @@
     <input type="submit" class="btn btn-info" value="Logout">
 </form>
 </body>
-</html>

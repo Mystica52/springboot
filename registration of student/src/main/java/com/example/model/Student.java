@@ -1,9 +1,19 @@
 package com.example.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
 
 @Entity
 public class Student {
@@ -13,34 +23,6 @@ public class Student {
     private String studentname;
     private String course;
 
-    public Student() {
-
-    }
-    public Student(Long id, String studentname, String course) {
-
-        this.id = id;
-        this.studentname = studentname;
-        this.course = course;
-
-    }
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getStudentname() {
-        return studentname;
-    }
-    public void setStudentname(String studentname) {
-        this.studentname = studentname;
-    }
-    public String getCourse() {
-        return course;
-    }
-    public void setCourse(String course) {
-        this.course = course;
-    }
 
 
 }

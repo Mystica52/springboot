@@ -31,7 +31,9 @@ public class UserRegistrationController {
         return "registration";
     }
 
-    @PostMapping
+
+
+    @PostMapping()
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
                                       BindingResult result) {
 
@@ -45,6 +47,6 @@ public class UserRegistrationController {
         }
 
         userService.save(userDto);
-        return "redirect:/registration?success";
+        return "redirect:/list";
     }
 }
