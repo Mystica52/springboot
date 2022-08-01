@@ -1,6 +1,8 @@
 package com.example.dto;
 
+import com.example.model.Otp;
 import com.example.model.User;
+import com.example.repository.OtpRepository;
 import com.example.repository.UserRepository;
 import com.example.service.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotEmpty;
 import java.io.*;
 import java.nio.file.Files;
 import java.sql.Date;
@@ -29,7 +33,9 @@ public class EmailTemplate {
     public OTPService otpService;
 
 
-    private User user;
+    private Otp user;
+    @Autowired
+    private OtpRepository repository;
 
     @Autowired
     private UserRepository repo;
@@ -49,29 +55,29 @@ public class EmailTemplate {
 
     }
 
-    private String loadTemplate(String customtemplate) throws Exception {
+//    private String loadTemplate(String customtemplate) throws Exception {
+//
+//        ClassLoader classLoader = getClass().getClassLoader();
+//        File file = new File(classLoader.getResource(customtemplate).getFile());
+//        String content = "Empty";
+//        try {
+//            content = new String(Files.readAllBytes(file.toPath()));
+//        } catch (IOException e) {
+//            throw new Exception("Could not read template  = " + customtemplate);
+//        }
+//        return content;
+//
+//    }
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(customtemplate).getFile());
-        String content = "Empty";
-        try {
-            content = new String(Files.readAllBytes(file.toPath()));
-        } catch (IOException e) {
-            throw new Exception("Could not read template  = " + customtemplate);
-        }
-        return content;
-
-    }
-
-    public String getTemplate(Map<String, String> replacements) {
-
-        String cTemplate = this.template;
-        //Replace the String
-        for (Map.Entry<String, String> entry : replacements.entrySet()) {
-            cTemplate = cTemplate.replace("{{" + entry.getKey() + "}}", entry.getValue());
-        }
-        return cTemplate;
-    }
+//    public String getTemplate(Map<String, String> replacements) {
+//
+//        String cTemplate = this.template;
+//        //Replace the String
+//        for (Map.Entry<String, String> entry : replacements.entrySet()) {
+//            cTemplate = cTemplate.replace("{{" + entry.getKey() + "}}", entry.getValue());
+//        }
+//        return cTemplate;
+//    }
 
     public void sendEmail() throws Exception {
         final String fromEmail = "mdukuzeyezu@bk.rw"; //requires valid gmail id
@@ -140,7 +146,7 @@ public class EmailTemplate {
 //            }else {
 //                return FAIL;
 //            }
-        public int getOTP() {
+        public static int getOTP() {
 
 
             Random rand = new Random();
@@ -164,12 +170,36 @@ public class EmailTemplate {
         }
         return true;
     }
-    public User save(UserRegistrationDto registration) {
-        User user = new User();
-        user.setOtpnum(registration.getOptnum());
-        user.setOtpRequestedTime(registration.getOtpRequestedTime());
-        return repo.save(user);
+    @NotEmpty
+    private Integer optnum;
+
+    @NotEmpty
+    private Date otpRequestedTime;
+
+
+
+    public int getOptnum() {
+        return optnum;
     }
+
+    public void setOptnum(int optnum) {
+        this.optnum =optnum;
+    }
+
+    public Date getOtpRequestedTime() {
+        return otpRequestedTime;
+    }
+
+    public void setOtpRequestedTime(Date otpRequestedTime) {
+        this.otpRequestedTime = otpRequestedTime;
+    }
+
+//    public Otp save(EmailTemplate otp) {
+//        Otp user = new Otp();
+//        user.setOtpnum(getOTP());
+//        user.setOtpRequestedTime(otp.getOtpRequestedTime());
+//        return repository.save(user);
+//    }
 
 
 

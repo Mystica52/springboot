@@ -33,30 +33,15 @@ public class UserRegistrationDto {
     @NotEmpty
     private String confirmEmail;
 
-    @NotEmpty
-    private Integer optnum;
 
-    @NotEmpty
-    private Date otpRequestedTime;
 
     @AssertTrue
     private Boolean terms;
 
-    public int getOptnum() {
-        return optnum;
-    }
 
-    public void setOptnum(int optnum) {
-        this.optnum =optnum;
-    }
 
-    public Date getOtpRequestedTime() {
-        return otpRequestedTime;
-    }
 
-    public void setOtpRequestedTime(Date otpRequestedTime) {
-        this.otpRequestedTime = otpRequestedTime;
-    }
+
 
     public String getFirstName() {
         return firstName;

@@ -21,11 +21,7 @@ public class User {
 
 
 
-    @Column(name="otpnum")
-    private Integer otpnum;
 
-    @Column(name="otp_Requested_Time")
-    private Date otpRequestedTime;
 
 
 
@@ -95,21 +91,6 @@ public class User {
         this.password = password;
     }
 
-    public int getOtpnum() {
-        return this.otpnum;
-    }
-
-    public void setOtpnum(int i) {
-        this.otpnum = i ;
-    }
-
-    public Date getOtpRequestedTime() {
-        return otpRequestedTime;
-    }
-
-    public void setOtpRequestedTime(Date otpRequestedTime) {
-        this.otpRequestedTime = otpRequestedTime;
-    }
 
     public Collection < Role > getRoles() {
         return roles;

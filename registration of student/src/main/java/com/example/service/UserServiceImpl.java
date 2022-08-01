@@ -1,8 +1,10 @@
 package com.example.service;
 
 import com.example.dto.UserRegistrationDto;
+import com.example.model.Otp;
 import com.example.model.Role;
 import com.example.model.User;
+import com.example.repository.OtpRepository;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,15 +25,18 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private OtpRepository Repository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    @Override
-    public User findByOptnum(int optnum) {
-        return userRepository.findByOtpnum(optnum);
+
+    public Otp findByOptnum(int optnum) {
+        return Repository.findByOtpnum(optnum);
     }
 
     public User save(UserRegistrationDto registration) {

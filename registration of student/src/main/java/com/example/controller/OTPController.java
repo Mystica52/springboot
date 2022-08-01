@@ -2,6 +2,8 @@ package com.example.controller;
 
 import com.example.dto.EmailTemplate;
 import com.example.dto.UserRegistrationDto;
+import com.example.model.Otp;
+import com.example.model.User;
 import com.example.service.EmailService;
 import com.example.service.OTPService;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -52,17 +55,24 @@ public class OTPController {
     }
 
     @RequestMapping(value ="/validateOtp", method = RequestMethod.POST)
-    public @ResponseBody String validateOtp(@Valid UserRegistrationDto  otpnum){
+    public @ResponseBody String validateOtp(@ModelAttribute("otp") @Valid EmailTemplate  otp, BindingResult result){
 
         final String SUCCESS = "Entered Otp is valid";
         final String FAIL = "Entered Otp is NOT valid. Please Retry!";
+        otpService.save(otp);
 
+        int existing = otpService.findByOptnum(otp.getOTP());
 
-        if(Objects.equals(otpnum, temp.getOTP())){
-            temp.save(otpnum);
-            return "index";
+        if (existing == EmailTemplate.getOTP()) {
+            result.rejectValue("otpnum", null, "There is already an account registered with that email");
         }
-        return "Entered Otp is NOT valid. Please Retry!" + "redirect:/otppage";
+
+        if (result.hasErrors()) {
+            return   "redirect:/otppage";
+
+
+        }
+        return "index";
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        String username = auth.getName();
         //Validate the Otp
