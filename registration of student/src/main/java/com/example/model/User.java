@@ -1,8 +1,7 @@
 package com.example.model;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Collection;
+
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -17,16 +16,22 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+
+    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+//    @JoinTable(name = "role_users",
+//            joinColumns = @JoinColumn(name = "role_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @JoinColumn(
-                  name = "user_id")//, referencedColumnName = "id")
+                  name = "role_id")//, referencedColumnName = "id")
 //    @JoinTable(
 //            name = "users_roles",
 //            joinColumns = @JoinColumn(
 //                    name = "user_id", referencedColumnName = "id"),
 //            inverseJoinColumns = @JoinColumn(
 //                    name = "role_id", referencedColumnName = "id"))
-    private Collection < Role > roles;
+    private  Role  role;
 
     public User() {}
 
@@ -37,12 +42,12 @@ public class User {
         this.password = password;
     }
 
-    public User(String firstName, String lastName, String email, String password, Collection < Role > roles) {
+    public User(String firstName, String lastName, String email, String password, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }
 
     public Long getId() {
@@ -86,12 +91,13 @@ public class User {
     }
 
 
-    public Collection < Role > getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Collection< Role > roles) {
-        this.roles = roles;
+    public void setRole(Role  role) {
+        this.role = role;
+
     }
 
     @Override
@@ -102,7 +108,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + "*********" + '\'' +
-                ", roles=" + roles +
+                ", roles=" + role +
                 '}';
     }
 }

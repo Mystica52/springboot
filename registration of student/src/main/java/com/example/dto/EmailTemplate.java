@@ -1,24 +1,16 @@
 package com.example.dto;
 
 import com.example.model.Otp;
-import com.example.model.User;
 import com.example.repository.OtpRepository;
 import com.example.repository.UserRepository;
 import com.example.service.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
-import java.io.*;
-import java.nio.file.Files;
 import java.sql.Date;
 import java.util.Map;
 import java.util.Properties;
@@ -79,7 +71,7 @@ public class EmailTemplate {
 //        return cTemplate;
 //    }
 
-    public void sendEmail() throws Exception {
+    public boolean sendEmail() throws Exception {
         final String fromEmail = "mdukuzeyezu@bk.rw"; //requires valid gmail id
         final String password = "rosaDb10!"; // correct password for gmail id
         final String toEmail = "dukumystica20@gmail.com"; // can be any email id
@@ -103,6 +95,7 @@ public class EmailTemplate {
 
         EmailUtil.sendEmail(session, toEmail, "TLSEmail Testing Subject", message);
 //        otpService.save(getOTP());
+        return false;
     }
 //        StringBuilder contentBuilder = new StringBuilder();
 //        try {

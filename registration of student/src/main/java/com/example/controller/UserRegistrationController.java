@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.UserRegistrationDto;
+import com.example.model.Role;
 import com.example.model.User;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/registration")
 public class UserRegistrationController {
+
 
     @Autowired
     private UserService userService;
@@ -30,6 +33,8 @@ public class UserRegistrationController {
     public String showRegistrationForm(Model model) {
         return "registration";
     }
+
+
 
 
 

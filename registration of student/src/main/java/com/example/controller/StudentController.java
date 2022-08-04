@@ -71,6 +71,6 @@ public class StudentController {
     @PreAuthorize("hasRole('ADMIN')")
     public String deletestudent(@PathVariable(name = "id") int id) {
         service.delete(id);
-        return "redirect:/";
+        return "redirect:/list";
     }
 }

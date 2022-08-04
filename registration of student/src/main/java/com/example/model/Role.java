@@ -10,19 +10,12 @@ public class Role {
     private Long id;
     private String name;
 
-    @OneToOne(orphanRemoval = true)
-    @JoinTable(name = "role_user",
-            joinColumns = @JoinColumn(name = "role_null"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private User user;
 
-    public User getUser() {
-        return user;
-    }
+//    @JoinColumn(name = "user_id")
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+
+
+
 
     public Role() {}
 
