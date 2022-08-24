@@ -2,18 +2,23 @@ package com.example.dto;
 
 import com.example.constraint.FieldMatch;
 import com.example.model.Role;
+import com.example.model.User;
+import com.example.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.sql.Date;
-import java.util.Collection;
+import java.util.Optional;
 
 @FieldMatch.List({
         @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
         @FieldMatch(first = "email", second = "confirmEmail", message = "The email fields must match")
 })
+
 public class UserRegistrationDto {
+    @Autowired
+    private UserService userService;
 
     @NotEmpty
     private String firstName;
@@ -103,6 +108,9 @@ public class UserRegistrationDto {
     }
 
     public Role getRole() {
+//        String role1= String.valueOf(userService.get(role));
+//        Role user2=new Role(role1);
+
         return role;
     }
 

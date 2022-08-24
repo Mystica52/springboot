@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
 
@@ -19,20 +20,36 @@ import java.util.Set;
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Otp {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Integer OTP_ID;
 
-    private Integer id;
-
     @Column(name="otpnum")
     private Integer otpnum;
-    @Column(name="otp_Requested_Time")
-    private Date otpRequestedTime;
 
-    @OneToMany(fetch = FetchType.LAZY)
-     @JoinColumn ( name = "id", referencedColumnName = "id")
-    private Collection<User> user;
+    @Column(name = "otp_requested_time")
+    private LocalDateTime otpRequestedTime;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn ( name = "user_id")
+    private User user;
+
+    public Otp(Integer otpnum, int expireIn) {
+
+        this.otpnum = otpnum;
+        this.otpRequestedTime = LocalDateTime.now().plusSeconds(expireIn);
+    }
+
+    public Otp(Integer otpnum, LocalDateTime expireTime) {
+
+        this.otpnum = otpnum;
+        this.otpRequestedTime = expireTime;
+    }
+
+    public boolean isExpire() {
+
+        return LocalDateTime.now().isAfter(otpRequestedTime);
+    }
 
 
 

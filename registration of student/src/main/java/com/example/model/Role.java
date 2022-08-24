@@ -1,12 +1,18 @@
 package com.example.model;
 
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 public class Role {
+//    @Autowired
+//    private RoleRepository repo;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
@@ -21,6 +27,8 @@ public class Role {
 
     public Role(String name) {
         this.name = name;
+
+
     }
 
     public Long getId() {
@@ -46,4 +54,8 @@ public class Role {
                 ", name='" + name + '\'' +
                 '}';
     }
+//     public Optional<Role> get(Long role_id) {
+//         return repo.findById(role_id);
+//
+//    }
 }

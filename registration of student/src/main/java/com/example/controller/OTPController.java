@@ -1,36 +1,28 @@
 package com.example.controller;
 
-import com.example.dto.EmailTemplate;
-import com.example.dto.UserRegistrationDto;
-import com.example.model.Otp;
-import com.example.model.User;
 import com.example.service.EmailService;
+import com.example.repository.OtpRepository;
 import com.example.service.OTPService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
-import javax.validation.Valid;
-import java.io.FileNotFoundException;
-import java.util.Objects;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
 public class OTPController {
 
-
     @Autowired
     public OTPService otpService;
-    @Autowired
-    public EmailTemplate temp;
+
 
     @Autowired
-    public EmailService emailService;
+    public OtpRepository repo;
+
 
     @GetMapping("/generateOtp")
     public String generateOTP() throws Exception {
@@ -39,68 +31,50 @@ public class OTPController {
         String username = auth.getName();
 //        int otp = otpService.generateOTP(username);
         //Generate The Template to send OTP
-        EmailTemplate template = new EmailTemplate();
-//        Map<String,String> replacements = new HashMap<String,String>();
-//        replacements.put("user", username);
-//        replacements.put("user", username);
-
-       // replacements.put("otpnum", String.valueOf(otp));
-       // String message = template.getTemplate(replacements);
-
-        boolean flag = template.sendEmail();
-        if (flag){
-
-
-        }
-
-       // emailService.sendOtpMessage("dukumystica20@gmail.com", "OTP -SpringBoot", message);
+        EmailService template = new EmailService();
+        template.sendEmail();
+        otpService.save(template);
 
         return "otppage";
     }
 
-    @RequestMapping(value ="/validateOtp", method = RequestMethod.POST)
-    public @ResponseBody String validateOtp(@ModelAttribute("otp") @Valid EmailTemplate  otp, BindingResult result){
-        otpService.save(otp);
+    @PostMapping("/validateOtp")
+    public @ResponseBody String validateOtp(@RequestParam("otpnum") EmailService otp, HttpSession session) {
+
+        int myOtp = (int) session.getAttribute("optnum");
+
+        if (otp.getOtpnum() == myOtp) {
+            return "redirect:/default";
+
+        } else {
 
 
-        final String SUCCESS = "Entered Otp is valid";
-        final String FAIL = "Entered Otp is NOT valid. Please Retry!";
-
-
-        Otp existing = otpService.findByOptnum(otp.getOTP());
-
-        if (existing != null) {
-            result.rejectValue("otpnum", null, "There is already an account registered with that email");
+            return "otppage";
         }
-
-        if (result.hasErrors()) {
-            return   "redirect:/otppage";
-
-
-        }
-        return "index";
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        String username = auth.getName();
-        //Validate the Otp
-//        if(otpnum >= 0){
+    }
+//        public final static String SESSION_KEY_SMS_CODE = "SESSION_KEY_SMS_CODE";
 //
-//            int serverOtp = otpService.getOtp(username);
-//            if(serverOtp > 0){
-//                if(otpnum == serverOtp){
-//                    otpService.clearOTP(username);
+//        private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 //
-//                    return ("Entered otp is valid");
+//        @GetMapping("/code/sms")
+//        public void createSmsCode(HttpServletRequest request, HttpServletResponse response, String email) throws IOException {
 //
-//                }
-//                else {
-//                    return FAIL ;
-//                }
-//            }else {
-//                return FAIL;
-//            }
-//        }else {
-//            return FAIL;
+//            Otp otp = createOtp();
+//            sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY_SMS_CODE +email, otp);
+//            //  Output verification code to console instead of SMS sending service
+//            System.out.println(" Your login verification code is ：" + otp.getOtpnum() + ", The effective time is 60 second ");
+//        }
+//
+//        private Otp createOtp() {
+//
+//            Random rand = new Random();
+//            int otpnum = rand.nextInt(100000, 999999);
+//
+//
+//            return new Otp(otpnum, 60);
 //        }
 
-    }
+
+
 }
+

@@ -1,20 +1,12 @@
 package com.example.service;
 
-import com.example.dto.EmailTemplate;
-import com.example.dto.UserRegistrationDto;
 import com.example.model.Otp;
-import com.example.model.User;
-import com.example.repository.OtpRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 
 
 public interface OTPService  {
      Otp findByOptnum(int optnum);
 
-    Otp save(EmailTemplate otp);
+    Otp save(EmailService otp);
 
 }
 

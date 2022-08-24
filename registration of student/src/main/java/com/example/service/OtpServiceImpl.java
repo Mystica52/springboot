@@ -1,6 +1,5 @@
 package com.example.service;
 
-import com.example.dto.EmailTemplate;
 import com.example.model.Otp;
 import com.example.repository.OtpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,16 @@ public class OtpServiceImpl implements OTPService{
         return Repository.findByOtpnum(optnum);
     }
 
+
+
     @Autowired
     private OtpRepository repository ;
-    public  Otp save(EmailTemplate otp) {
+    public  Otp save(EmailService otp) {
         Otp user = new Otp();
-        user.setOtpnum(otp.getOTP());
+        user.setOtpnum(otp.getOtpnum());
         user.setOtpRequestedTime(otp.getOtpRequestedTime());
         return repository.save(user);
     }
+
+
 }

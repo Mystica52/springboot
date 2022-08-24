@@ -1,14 +1,25 @@
 package com.example.model;
 
+import com.example.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
+import java.util.Optional;
 
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
+    @Autowired
+
+//    @Autowired
+//    private UserRepository repo;
+
+//    @Autowired
+//    private RoleRepository repo;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;
@@ -19,18 +30,7 @@ public class User {
 
 
     @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id")
-//    @JoinTable(name = "role_users",
-//            joinColumns = @JoinColumn(name = "role_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    @JoinColumn(
-                  name = "role_id")//, referencedColumnName = "id")
-//    @JoinTable(
-//            name = "users_roles",
-//            joinColumns = @JoinColumn(
-//                    name = "user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "role_id", referencedColumnName = "id"))
+    @JoinColumn(name = "role_id")
     private  Role  role;
 
     public User() {}
@@ -92,6 +92,8 @@ public class User {
 
 
     public Role getRole() {
+
+
         return role;
     }
 
@@ -111,4 +113,10 @@ public class User {
                 ", roles=" + role +
                 '}';
     }
+//    public Optional<Role> get(Role role) {
+//        return repo.findById(role.getId());
+//
+//    }
+
+
 }

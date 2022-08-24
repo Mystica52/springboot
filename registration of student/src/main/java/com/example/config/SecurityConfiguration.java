@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
 //                .defaultSuccessUrl("/generateOtp")
-//                .permitAll()
+               .permitAll()
                 .defaultSuccessUrl("/default")
 
                 .permitAll()

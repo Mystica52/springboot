@@ -5,6 +5,7 @@ import com.example.model.Otp;
 import com.example.model.Role;
 import com.example.model.User;
 import com.example.repository.OtpRepository;
+import com.example.repository.RoleRepository;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,11 +17,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private EmailService temp;
+
+
+    @Autowired
+    private RoleRepository repo;
 
     @Autowired
     private UserRepository userRepository;
@@ -46,10 +53,8 @@ public class UserServiceImpl implements UserService {
         user.setLastName(registration.getLastName());
         user.setEmail(registration.getEmail());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-
-
-
-        user.setRole((registration.getRole()));
+        user.setRole(registration.getRole());
+//        user.findById((registration.getRole()));
 
         return userRepository.save(user);
     }
@@ -58,9 +63,12 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
 
+
+
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
+
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(), mapRolesToAuthorities( user.getRole()));
     }
@@ -69,6 +77,25 @@ public class UserServiceImpl implements UserService {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Role role) {
         return Collections.singleton(new SimpleGrantedAuthority(role.getName()));
     }
+
+    public Role get(Role role) {
+//        String role2= String.valueOf(repo.findById(role.getId()));
+
+        return  role;
+    }
+
+    public List<Role> listAll() {
+        return repo.findAll();
+
+
+    }
+//    public Object getPassword() {
+//        if (temp.isOTPRequired()) {
+//            return temp.getOtpnum(null);
+//        }
+//
+//        return null;
+//    }
 
     }
 
