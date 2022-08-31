@@ -61,7 +61,7 @@ public class OtpServiceImpl implements OTPService{
             return ResponseEntity.unprocessableEntity().body("Expired token.");
         }
 
-        
+
 
         otp.setConfirmedDateTime(LocalDateTime.now());
         otp.setStatus(Otp.STATUS_VERIFIED);
