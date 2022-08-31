@@ -13,7 +13,7 @@
 <body>
 
 
-<form id="validateOtp" name="validateOtp" modelAttribute="otp">
+<form action="/generateOtp"  name="otp" modelAttribute="otp">
     <fieldset>
 
         <div th:if="${param.error}">
@@ -24,8 +24,8 @@
         <h2> enter verification number</h2>
 
         <div class="form-group">
-            <input type="text" name="otpnum" id="otpnum" class="form-control input-lg"
-                   />
+            <input type="text" name="otp" id="otp" class="form-control input-lg"
+            />
         </div>
 
         <div class="row">

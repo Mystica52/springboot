@@ -1,13 +1,34 @@
 package com.example.service;
 
 import com.example.model.Otp;
+import com.example.model.User;
+import org.springframework.http.ResponseEntity;
 
 
 public interface OTPService  {
-     Otp findByOptnum(int optnum);
+    //Otp findByOtpnum(String otp);
+   // Otp findByUser(User user);
+//    void save(User user, String otp);
 
-    Otp save(EmailService otp);
+//    Otp findByOptnum(int optnum);
 
+//    Otp save(EmailService otp);
+
+    void createVerification(String email) throws Exception;
+
+    ResponseEntity<String> verifyEmail(int otp1);
+//
+//
+//
+//    Otp createOtp();
+//
+//    void saveOtp(Otp otp);
+//
+//    Otp findByOtpnum(int otpnum);
+//
+//    void removeOtp(Otp otp);
+//
+//    void removeByOtp(int otp);
 }
 
 

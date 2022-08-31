@@ -18,7 +18,14 @@ public interface UserService extends UserDetailsService {
 
     User save(UserRegistrationDto registration);
 
+
+
+
     Role get(Role role);
 
       List<Role> listAll();
+
+    //void sendLoginConfirmationEmail(User user);
+
+
 }

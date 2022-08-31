@@ -47,7 +47,7 @@ public class UserRegistrationDto {
 
 
 
-    @NotEmpty
+
     private Role role;
 
 

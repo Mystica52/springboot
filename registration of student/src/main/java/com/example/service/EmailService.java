@@ -1,18 +1,19 @@
 package com.example.service;
 
 import com.example.dto.EmailUtil;
-import com.example.model.Otp;
+import com.example.model.User;
 import com.example.repository.OtpRepository;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
@@ -20,26 +21,60 @@ import java.util.Random;
 
 @Service
 public class EmailService {
+    @NotEmpty
+    private  User user;
     @Autowired
-    public OTPService otpService;
+    private OTPService otpService;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+    @Autowired
+    private TemplateEngine template;
 
 
-    private Otp user;
+
     @Autowired
     private OtpRepository repository;
 
     @Autowired
     private UserRepository repo;
 
+//    public void sendEmail(User user) throws MessagingException{
+//        Otp otp2=otpService.findByUser(user);
+//        //check if the user has a token
+//        if (otp2 != null){
+//         String otp3= otp2.getOtpnum();
+//            Context context= new Context();
+//            context.setVariable("title", "verify your email adress");
+//            context.setVariable("link", "https://localhost:8080/generateOtp?otp"+ otp3 );
+//            //create a HTML template and pass the variable to it
+//            String body= template.process("otppage", context);
+//
+//            //send the verification email
+//            MimeMessage message= javaMailSender.createMimeMessage();
+//            MimeMessageHelper helper= new MimeMessageHelper(message, true);
+//            helper.setTo(user.getEmail());
+//            helper.setSubject("email address verification");
+//            helper.setText(body, true);
+//            javaMailSender.send(message);
+//        }
+//    }
     private static final long OTP_VALID_DURATION = 5 * 60 * 1000;
 
-    private String template;
-    private Map<String, String> replacementParams;
+    @NotEmpty
+    private Integer otpnum;
+
 
     public EmailService() {
 
 
 
+    }
+
+    public EmailService(LocalDateTime otpRequestedTime, int otpnum, User user) {
+        this.otpnum = otpnum;
+        this.otpRequestedTime = otpRequestedTime;
     }
 
     public void sendEmail() throws Exception {
@@ -62,12 +97,18 @@ public class EmailService {
             }
         };
         Session session = Session.getInstance(props, auth);
+
         String message = " Your Otp Number is " + getOtpnum();
+        LocalDateTime expireTime= LocalDateTime.now();
+        int expireIn=5;
+        EmailService otp= new EmailService(getOtpRequestedTime( expireTime, expireIn), getOtpnum(), getUser());
 
 
 
 
         EmailUtil.sendEmail(session, toEmail, "TLSEmail Testing Subject", message);
+//        otpService.save(otp);
+
 
     }
 
@@ -102,13 +143,23 @@ public class EmailService {
         this.optnum =optnum;
     }
 
-    public LocalDateTime getOtpRequestedTime() {
+    public LocalDateTime getOtpRequestedTime(LocalDateTime expireTime,int expireIn) {
+
+        this.otpRequestedTime = LocalDateTime.now().plusSeconds(expireIn);
+
+        this.otpRequestedTime = expireTime;
+
         return otpRequestedTime;
     }
 
     public void setOtpRequestedTime(LocalDateTime otpRequestedTime) {
         this.otpRequestedTime = otpRequestedTime;
     }
+
+    public @NotEmpty User getUser() {
+        return user;
+    }
+
 
 
 }

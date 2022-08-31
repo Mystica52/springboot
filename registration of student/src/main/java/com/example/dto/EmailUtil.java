@@ -1,11 +1,9 @@
 package com.example.dto;
 
-import com.example.model.User;
 import com.example.repository.UserRepository;
 import com.example.service.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 
 import java.util.Date;
 
@@ -55,7 +53,7 @@ public class EmailUtil {
 
             msg.setSubject(subject, "UTF-8");
 
-            msg.setText(body, "UTF-8");
+            msg.setText(String.valueOf(body), "UTF-8");
 
             msg.setSentDate(new Date());
 

@@ -1,10 +1,16 @@
 package com.example.model;
 
 import com.example.service.UserService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.Optional;
+import java.util.Set;
+
+@Getter
+@Setter
 
 
 @Entity
@@ -29,9 +35,17 @@ public class User {
 
 
 
+    boolean enable;
+
+    private Boolean isActive;
+
+
+
     @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private  Role  role;
+
+
 
     public User() {}
 
