@@ -1,11 +1,11 @@
 # springboot
 SPRING BOOT
+# It  took as Bank Kigali(Bk) accademic intern project to faciliate me  to understand the java /springboot  which used in micro services used in BK 
 
 Spring boot is a java based framework which is used to develop microservices services which means it is easy to develop and deploy independently. It is used to create a stand alone application which runs on its own  without an external web server. It is used for one who is experienced with java , spring, maven,and gradle. It has man different dependency like 
 Starter, auto-configuration,beans, and actuators
 
 
- #It  took as Bank Kigali of  Bk project to faciliate me  to understand the java /springboot  which used in micro services used in BK 
 
 Advantage of spring boot
 
@@ -37,8 +37,8 @@ In that project I downloaded from spring initializr I added another package whic
 
 The challenge 
 
-Because it is for the first time to use i was challenged
-To post it  the details in database using postman ,I  often got error
+Because it is for the first time to use it was challenged but I finally know it
+To post it  the details in database using postman ,
 To know the different function of annotation and dependency
 testing of spring boot is somehow challenged 
 Lot of class files sometimes you forgot what some of them did
@@ -51,3 +51,4 @@ Lot of class files sometimes you forgot what some of them did
 
 
 So spring boot is good to use for the one who is familiar with it and it is easy. I will become more familiar as time goes. To this spring boot needed often to use it in order to master it. I still continue to learn some terms used in it.
+
