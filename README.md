@@ -4,6 +4,9 @@ SPRING BOOT
 Spring boot is a java based framework which is used to develop microservices services which means it is easy to develop and deploy independently. It is used to create a stand alone application which runs on its own  without an external web server. It is used for one who is experienced with java , spring, maven,and gradle. It has man different dependency like 
 Starter, auto-configuration,beans, and actuators
 
+
+ #It  took as Bank Kigali of  Bk project to faciliate me  to understand the java /springboot  which used in micro services used in BK 
+
 Advantage of spring boot
 
 Easy deployment
